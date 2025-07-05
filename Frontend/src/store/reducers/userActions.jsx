@@ -5,7 +5,7 @@ export const asyncGetUsers = () =>  async (dispatch, getState) => {
     try {
         const res = await axiosInstance.get('/users');
         dispatch(loadUser(res.data));
-        console.log("current state ->>>>>", getState());
+        // console.log("current state ->>>>>", getState());
         
         
     } catch (error) {
