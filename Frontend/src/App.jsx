@@ -1,20 +1,25 @@
 import { useEffect } from 'react';
-import { asyncGetUsers } from './store/reducers/userActions';
 import { useDispatch, useSelector } from 'react-redux';
+import MainRoutes from './routes/MainRoutes';
+import Navbar from './components/Navbar';
 
 const App = () => {
 
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state);
-  console.log(data);
+  // const dispatch = useDispatch();
+  // const data = useSelector((state) => state);
+  // console.log(data);
   
 
-  useEffect(() => {
-    dispatch(asyncGetUsers()); //we are treating asyncGetUSers as actions so we are dispatching it
-  }, []);
+  // useEffect(() => {
+    // dispatch(asyncGetUsers()); //we are treating asyncGetUSers as actions so we are dispatching it
+  // }, []);
 
   return (
-    <div>App</div>
+<div className="bg-gray-800 text-white min-h-screen overflow-x-hidden">
+  <Navbar />
+  <MainRoutes />
+</div>
+
   )
 }
 

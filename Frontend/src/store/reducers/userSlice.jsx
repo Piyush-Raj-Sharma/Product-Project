@@ -8,7 +8,7 @@ const userSlice = createSlice({
     name: "user",
     initialState,
 
-    reducers: {
+    reducers: {  // here reducers means actions & is only the one who is capable to mutate initialState
         loadUser: (state, action) => {  // state is the initial state here 
             console.log(action);
             state.data = action.payload; // when we pass something to loadUser it gets stores in action.payload
