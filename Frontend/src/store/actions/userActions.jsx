@@ -1,4 +1,5 @@
 import axiosInstance from "../../api/axiosconfig";
+import { loadUser } from "../reducers/userSlice";
 
 //register USer
 export const asyncRegisterUsers = (user) => async (dispatch, getState) => {
@@ -26,9 +27,23 @@ export const asyncLoginUsers = (user) => async (dispatch, getState) => {
 // logout user
 export const asyncLogoutUser = (user) => async (dispatch, getState) => {
    try {
-         localStorage.setItem('userToken', "");
+         localStorage.removeItem('userToken');
+         console.log('User Logged Out!');
+         
    } catch (error) {
     console.error(error);
     
    }
+}
+
+//get user details
+export const asyncCurrentUser = () => async (dispatch, getState) => {
+    try {
+        const user = localStorage.getItem('userToken');
+        user?dispatch(loadUser(user)):console.log("user not logged in!");
+        
+    } catch (error) {
+        console.error(error);
+        
+    }
 }

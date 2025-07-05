@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    data : []
+    data : null,
 }
 
 const userSlice = createSlice({
@@ -10,7 +10,7 @@ const userSlice = createSlice({
 
     reducers: {  // here reducers means actions & is only the one who is capable to mutate initialState
         loadUser: (state, action) => {  // state is the initial state here 
-            console.log(action);
+            // console.log(action);
             state.data = action.payload; // when we pass something to loadUser it gets stores in action.payload
             
         }, //these are Actions - and are dispached not called like functions
