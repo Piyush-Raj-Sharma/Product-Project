@@ -1,6 +1,6 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { asyncRegisterUsers } from "../store/actions/userActions";
 
@@ -13,11 +13,13 @@ const Register = () => {
   } = useForm();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const registerHandler = (user) => {
     user.id = nanoid();
     user.isAdmin = false;
     dispatch(asyncRegisterUsers(user));
+    navigate('/login');
     // console.log("New User:", user);
     reset();
   };
