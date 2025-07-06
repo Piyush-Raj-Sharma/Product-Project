@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const user = useSelector((state) => state.userReducer.userData);
-  console.log(user);
+  // console.log(user);
 
   return (
     <nav className="flex gap-4 p-4 bg-gray-700 text-gray-200 shadow-md justify-center">
