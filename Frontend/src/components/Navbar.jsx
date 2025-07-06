@@ -49,17 +49,28 @@ const Navbar = () => {
               >
                 Create Product
               </NavLink>
-              {/* <button onClick={logoutHandler}>Logout</button> */}
-            </>
-          ) : (
-            <NavLink 
-            to="user-profile"
-            className={({ isActive }) =>
+              <NavLink
+                to="user-profile"
+                className={({ isActive }) =>
                   isActive
                     ? "text-blue-400 font-semibold"
                     : "text-gray-300 hover:text-white"
                 }
-            >Settings</NavLink>
+              >
+                Settings
+              </NavLink>
+            </>
+          ) : (
+            <NavLink
+              to="user-profile"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-400 font-semibold"
+                  : "text-gray-300 hover:text-white"
+              }
+            >
+              Settings
+            </NavLink>
             // <button onClick={logoutHandler}>Logout</button>
           )}
         </>

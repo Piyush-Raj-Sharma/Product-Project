@@ -76,11 +76,14 @@ export const asyncUpdateUser = (updatedUser) => async (dispatch, getState) => {
   }
 };
 
+//delete user account
 export const asyncDeleteUser = (id) => async (dispatch, getState) => {
   try {
     await axiosInstance.delete(`/users/${id}`);
-    toast.success("Account deleted successfully");
     dispatch(asyncCurrentUser());
+    localStorage.removeItem("userToken");
+    dispatch(removeUser());
+    toast.success("Account deleted successfully");
   } catch (error) {
     console.error(error);
     toast.error("Error deleting user:", error)

@@ -31,7 +31,7 @@ const UserProfile = () => {
 
   const logoutHandler = () => {
     dispatch(asyncLogoutUser());
-    navigate("/");
+    navigate("/login");
   };
 
   const deleteAccountHandler = () => {
@@ -41,7 +41,7 @@ const UserProfile = () => {
       )
     ) {
       dispatch(asyncDeleteUser(user.id));
-      navigate("/");
+      navigate("/login");
     }
   };
 
