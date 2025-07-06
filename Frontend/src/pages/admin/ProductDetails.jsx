@@ -15,7 +15,7 @@ const ProductDetails = () => {
 
   const deleteHandler = () => {
     dispatch(asyncDeleteProduct(id));
-    navigate("/products");
+    navigate("/");
   };
 
   if (!product) {
@@ -31,7 +31,7 @@ const ProductDetails = () => {
       {/* Back Button */}
       <div className="mb-6">
         <button
-          onClick={() => navigate("/products")}
+          onClick={() => navigate("/")}
           className="flex items-center gap-2 text-blue-400 hover:text-blue-500 transition ml-2"
         >
           <ArrowLeft size={18} />

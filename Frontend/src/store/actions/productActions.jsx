@@ -3,7 +3,7 @@ import { loadProducts } from '../reducers/productSlice';
 
 export const asyncCreateProduct = (product) => async (dispatch, getState) => {
     try {
-        const { data } = await axiosInstance.post('/products', product);
+        await axiosInstance.post('/products', product);
         dispatch(asyncLoadProducts());
         
     } catch (error) {
@@ -23,7 +23,7 @@ export const asyncLoadProducts = () => async (dispatch, getState) => {
 
 export const asyncUpdateProduct = (updatedProduct) => async (dispatch, getState) => {
     try {
-        const { data } = await axiosInstance.patch(`/products/${updatedProduct.id}`, updatedProduct)
+        await axiosInstance.patch(`/products/${updatedProduct.id}`, updatedProduct)
         dispatch(asyncLoadProducts());
      } catch (error) {
         console.error(error);
@@ -33,7 +33,7 @@ export const asyncUpdateProduct = (updatedProduct) => async (dispatch, getState)
 
 export const asyncDeleteProduct = (id) => async (dispatch, getState) =>{
     try {
-        const res = await axiosInstance.delete(`/products/${id}`)
+        await axiosInstance.delete(`/products/${id}`)
         dispatch(asyncLoadProducts());
     } catch (error) {
         console.error(error);
