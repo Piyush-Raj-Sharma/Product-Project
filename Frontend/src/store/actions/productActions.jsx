@@ -22,3 +22,13 @@ export const asyncLoadProducts = () => async (dispatch, getState) => {
         console.error(error);
     }
 }
+
+export const asyncUpdateProduct = (updatedProduct) => async (dispatch, getState) => {
+    try {
+        const { data } = await axiosInstance.put(`/products/${updatedProduct.id}`, updatedProduct)
+        dispatch(asyncLoadProducts());
+     } catch (error) {
+        console.error(error);
+        
+    }
+}

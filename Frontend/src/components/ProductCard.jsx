@@ -1,20 +1,27 @@
 import { ShoppingCart, IndianRupee, Star } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
   return (
     <div
-  className="
-    bg-slate-800/90 backdrop-blur-sm text-white
-    w-full max-w-[230px] rounded-xl p-3
-    border border-slate-700 shadow-md
-    transition-all duration-300 group 
-    hover:scale-[1.03] 
-    hover:shadow-[0_8px_24px_rgba(59,130,246,0.25)] 
-    hover:border-blue-500/60
-    relative overflow-hidden
-  "
->
-
+      onClick={handleCardClick}
+      className="
+        bg-slate-800/90 backdrop-blur-sm text-white
+        w-full max-w-[230px] rounded-xl p-3
+        border border-slate-700 shadow-md
+        transition-all duration-300 group 
+        hover:scale-[1.03] 
+        hover:shadow-[0_8px_20px_rgba(59,130,246,0.25)] 
+        hover:border-blue-500/60
+        relative overflow-hidden
+      "
+    >
       {/* Badge */}
       <div className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wide shadow-md z-1">
         New
@@ -39,7 +46,7 @@ export const ProductCard = ({ product }) => {
         {product.description?.slice(0, 60)}...
       </p>
 
-      {/* Rating (mocked) */}
+      {/* Rating */}
       <div className="flex items-center text-yellow-400 text-xs mb-2">
         {[...Array(4)].map((_, i) => (
           <Star key={i} size={14} fill="currentColor" stroke="currentColor" />
