@@ -48,7 +48,7 @@ const EditProfile = () => {
   const onSubmit = (updatedData) => {
     updatedData.userImage = previewImg; 
     // console.log("Updated Data:", updatedData);
-    dispatch(asyncUpdateUser(updatedData));
+    dispatch(asyncUpdateUser(updatedData, user.id));
     navigate(-1);
   };
 

@@ -1,32 +1,87 @@
-import {Routes, Route} from 'react-router-dom';
-import Home from '../pages/Home';
-import Products from '../pages/Products';
-import Login from './../pages/Login';
-import Register from '../pages/Register';
-import CreateProduct from './../pages/admin/CreateProduct';
-import ProductDetails from '../pages/admin/ProductDetails';
-import UpdateProduct from '../components/UpdateProduct';
-import { useSelector } from 'react-redux';
-import UserProfile from '../pages/user/UserProfile';
-import EditProfile from '../pages/user/EditProfile';
+import { Routes, Route } from "react-router-dom";
+import Products from "../pages/Products";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import CreateProduct from "../pages/admin/CreateProduct";
+import ProductDetails from "../pages/admin/ProductDetails";
+import UpdateProduct from "../components/UpdateProduct";
+import UserProfile from "../pages/user/UserProfile";
+import EditProfile from "../pages/user/EditProfile";
+import PageNotFound from "../pages/PageNotFound";
+import AuthWrapper from "./AuthWrapper";
+import GuestWrapper from './GuestWrapper';
 
 const MainRoutes = () => {
 
-  const user = useSelector((state) => state.userReducer.userData); 
-
   return (
     <Routes>
-        <Route path="/" element={user ? <Products/> : <Home/>}/>
-        {/* <Route path='/products' element={<Products/>}/> */}
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/register' element={<Register/>}/>
-        <Route path='/admin/create-product' element={<CreateProduct/>}/>
-        <Route path='/product/:id' element={<ProductDetails/>}/>
-        <Route path='/product/update/:id' element={<UpdateProduct/>}/>
-        <Route path='/user-profile' element={<UserProfile/>}/>
-        <Route path='/edit-profile' element={<EditProfile/>}/>
-    </Routes>
-  )
-}
+      {/* Public Routes */}
+      <Route path="/" element={<Products />} />
 
-export default MainRoutes
+      {/* Protected Routes - so that users can access them after logging in  */}
+      <Route
+        path="/login"
+        element={
+          <GuestWrapper>
+            <Login />
+          </GuestWrapper>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <GuestWrapper>
+            <Register />
+          </GuestWrapper>
+        }
+      />
+
+      {/* Protected Routes - so that user cannot access these routes without login*/}
+      <Route
+        path="/admin/create-product"
+        element={
+          <AuthWrapper>
+            <CreateProduct />
+          </AuthWrapper>
+        }
+      />
+      <Route
+        path="/product/:id"
+        element={
+          <AuthWrapper>
+            <ProductDetails />
+          </AuthWrapper>
+        }
+      />
+      <Route
+        path="/product/update/:id"
+        element={
+          <AuthWrapper>
+            <UpdateProduct />
+          </AuthWrapper>
+        }
+      />
+      <Route
+        path="/user-profile"
+        element={
+          <AuthWrapper>
+            <UserProfile />
+          </AuthWrapper>
+        }
+      />
+      <Route
+        path="/edit-profile"
+        element={
+          <AuthWrapper>
+            <EditProfile />
+          </AuthWrapper>
+        }
+      />
+
+      {/* Fallback for all other routes */}
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
+  );
+};
+
+export default MainRoutes;

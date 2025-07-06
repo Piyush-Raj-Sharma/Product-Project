@@ -60,11 +60,11 @@ export const asyncCurrentUser = () => async (dispatch, getState) => {
 };
 
 //update user profile
-export const asyncUpdateUser = (updatedUser) => async (dispatch, getState) => {
+export const asyncUpdateUser = (updatedUser, id) => async (dispatch, getState) => {
   try {
-    const user = getState().userReducer.userData;
+    // const user = getState().userReducer.userData;
     const { data } = await axiosInstance.patch(
-      `/users/${user.id}`,
+      `/users/${id}`,
       updatedUser
     );
     toast.success("Profile updated successfully");
