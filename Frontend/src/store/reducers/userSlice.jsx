@@ -5,7 +5,7 @@ const initialState = {
 }
 
 const userSlice = createSlice({
-    name: "user",
+    name: "users",
     initialState,
 
     reducers: {  // here reducers means actions & is only the one who is capable to mutate initialState
@@ -14,9 +14,12 @@ const userSlice = createSlice({
             state.userData = action.payload; // when we pass something to loadUser it gets stores in action.payload
             
         }, //these are Actions - and are dispached not called like functions
+        removeUser: (state, action) => {
+            state.userData = null;
+        },
     }
 })
 
-export const {loadUser} = userSlice.actions;
+export const {loadUser, removeUser} = userSlice.actions;
 
 export default userSlice.reducer;

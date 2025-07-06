@@ -1,9 +1,15 @@
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncLogoutUser } from "../store/actions/userActions";
 
 const Navbar = () => {
   const user = useSelector((state) => state.userReducer.userData);
-  // console.log(user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    dispatch(asyncLogoutUser());
+    navigate("/");
+  };
 
   return (
     <nav className="flex gap-4 p-4 bg-gray-700 text-gray-200 shadow-md justify-center">
@@ -31,16 +37,23 @@ const Navbar = () => {
 
       {user ? (
         <>
-          <NavLink
-            to="/admin/create-product"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-400 font-semibold"
-                : "text-gray-300 hover:text-white"
-            }
-          >
-            Create Product
-          </NavLink>
+          {user?.isAdmin ? (
+            <>
+              <NavLink
+                to="/admin/create-product"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-400 font-semibold"
+                    : "text-gray-300 hover:text-white"
+                }
+              >
+                Create Product
+              </NavLink>
+              <button onClick={logoutHandler}>Logout</button>
+            </>
+          ) : (
+            <button onClick={logoutHandler}>Logout</button>
+          )}
         </>
       ) : (
         <>

@@ -14,10 +14,13 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const loginHandler = (user) => {
-    dispatch(asyncLoginUsers(user));
-    navigate('/');
-    reset();
+  const loginHandler = async (user) => {
+    const success = await dispatch(asyncLoginUsers(user));
+
+    if (success) {
+      navigate("/");
+      reset();
+    }
   };
 
   return (
@@ -58,7 +61,9 @@ const Login = () => {
             className="p-2 rounded bg-slate-700 text-white outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.password && (
-            <span className="text-red-500 text-sm">{errors.password.message}</span>
+            <span className="text-red-500 text-sm">
+              {errors.password.message}
+            </span>
           )}
         </div>
 

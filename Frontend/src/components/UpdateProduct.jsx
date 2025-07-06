@@ -17,18 +17,17 @@ const UpdateProduct = () => {
   const { id } = useParams();
 
   const productData = useSelector((state) => state.productReducer.productData);
- 
+  const product = productData.find((p) => p.id == id);
+
   const closeModal = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
-  const product = productData.find(p => p.id == id);
-
   useEffect(() => {
-    if(product){
-        reset(product)
+    if (product) {
+      reset(product);
     }
-  }, [product, reset])
+  }, [product, reset]);
 
   const updateProductHandler = (updatedProduct) => {
     dispatch(asyncUpdateProduct(updatedProduct));

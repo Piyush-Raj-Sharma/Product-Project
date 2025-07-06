@@ -4,8 +4,7 @@ import { loadProducts } from '../reducers/productSlice';
 export const asyncCreateProduct = (product) => async (dispatch, getState) => {
     try {
         const { data } = await axiosInstance.post('/products', product);
-        dispatch(loadProducts(data)); //sending the current product data to loadProduct/reducer which will we sent to store
-        // console.log(res);
+        dispatch(asyncLoadProducts());
         
     } catch (error) {
         console.error(error);
@@ -16,7 +15,6 @@ export const asyncLoadProducts = () => async (dispatch, getState) => {
     try {
         const {data} = await axiosInstance.get('/products');
         dispatch(loadProducts(data));
-        // console.log(data);
         
     } catch (error) {
         console.error(error);
@@ -25,9 +23,19 @@ export const asyncLoadProducts = () => async (dispatch, getState) => {
 
 export const asyncUpdateProduct = (updatedProduct) => async (dispatch, getState) => {
     try {
-        const { data } = await axiosInstance.put(`/products/${updatedProduct.id}`, updatedProduct)
+        const { data } = await axiosInstance.patch(`/products/${updatedProduct.id}`, updatedProduct)
         dispatch(asyncLoadProducts());
      } catch (error) {
+        console.error(error);
+        
+    }
+}
+
+export const asyncDeleteProduct = (id) => async (dispatch, getState) =>{
+    try {
+        const res = await axiosInstance.delete(`/products/${id}`)
+        dispatch(asyncLoadProducts());
+    } catch (error) {
         console.error(error);
         
     }
