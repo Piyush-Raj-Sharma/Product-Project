@@ -12,21 +12,24 @@ export const ProductCard = ({ product }) => {
     navigate(`/product/${product.id}`);
   };
 
-  const addCartHandler = (id) => {
-    const copyUser = {...user, cart: [...user.cart]};
-    const isProductInCart = copyUser.cart.findIndex((c) => c.productId == id); // if product not present in cart -> returns -1
-    if(isProductInCart == -1){
-      copyUser.cart.push({productId: id, quantity: 1});
-    }
-    else{
-      copyUser.cart[isProductInCart] = {
-        productId: id,
-        quantity: copyUser.cart[isProductInCart].quantity + 1,
-      };
-    }
-    dispatch(asyncUpdateUser(copyUser, copyUser.id));
-    // console.log(user);
+ const addCartHandler = (product) => {
+  const cart = [...user.cart];
+  const index = cart.findIndex((item) => item.product?.id === product.id);
+
+  if (index !== -1) {
+    // Update quantity 
+    cart[index] = {
+      ...cart[index],
+      quantity: cart[index].quantity + 1,
+    };
+  } else {
+    cart.push({ product, quantity: 1 });
   }
+
+  const updatedUser = { ...user, cart };
+  dispatch(asyncUpdateUser(updatedUser, user.id));
+};
+
 
   
 
@@ -86,7 +89,7 @@ export const ProductCard = ({ product }) => {
         </div>
 
         <button
-        onClick={() => addCartHandler(product.id)}
+        onClick={() => addCartHandler(product)}
           className="
             flex items-center gap-1 bg-blue-600 hover:bg-blue-700
             px-3 py-1 rounded-md text-xs font-medium

@@ -5,7 +5,7 @@ import { ProductCard } from "../components/ProductCard";
 
 const Products = () => {
   const products = useSelector((state) => state.productReducer.productData);
-  console.log("Products:", products);
+  // console.log("Products:", products);
 
   return (
     <div className="min-h-screen bg-slate-900 text-white px-4 py-8">

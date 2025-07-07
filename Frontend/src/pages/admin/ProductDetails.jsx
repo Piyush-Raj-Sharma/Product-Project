@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, IndianRupee, Star } from "lucide-react";
 import { asyncDeleteProduct } from "../../store/actions/productActions";
-import { asyncUpdateUser } from './../../store/actions/userActions';
+import { asyncUpdateUser } from "./../../store/actions/userActions";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -27,21 +27,23 @@ const ProductDetails = () => {
     );
   }
 
-    const addCartHandler = (id) => {
-    const copyUser = {...user, cart: [...user.cart]};
-    const isProductInCart = copyUser.cart.findIndex((c) => c.productId == id); // if product not present in cart -> returns -1
-    if(isProductInCart == -1){
-      copyUser.cart.push({productId: id, quantity: 1});
-    }
-    else{
-      copyUser.cart[isProductInCart] = {
-        productId: id,
-        quantity: copyUser.cart[isProductInCart].quantity + 1,
+  const addCartHandler = (product) => {
+    const cart = [...user.cart];
+    const index = cart.findIndex((item) => item.product?.id === product.id);
+
+    if (index !== -1) {
+      // Update quantity
+      cart[index] = {
+        ...cart[index],
+        quantity: cart[index].quantity + 1,
       };
+    } else {
+      cart.push({ product, quantity: 1 });
     }
-    dispatch(asyncUpdateUser(copyUser, copyUser.id));
-    // console.log(user);
-  }
+
+    const updatedUser = { ...user, cart };
+    dispatch(asyncUpdateUser(updatedUser, user.id));
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white px-4 py-10">
@@ -94,16 +96,17 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <button 
-              onClick = {() => addCartHandler(product.id)}
-              className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg text-sm font-semibold transition duration-150 active:scale-95 shadow-md">
+              <button
+                onClick={() => addCartHandler(product)}
+                className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg text-sm font-semibold transition duration-150 active:scale-95 shadow-md"
+              >
                 Add to Cart
               </button>
 
               {user?.isAdmin && (
                 <div className="flex gap-3">
                   <button
-                    onClick={() => navigate(`/product/update/${product.id}`)}
+                    onClick={() => navigate(`/product/update/${product}`)}
                     className="bg-yellow-600 hover:bg-yellow-700 px-5 py-2 rounded-lg text-sm font-semibold transition duration-150 active:scale-95 shadow-md"
                   >
                     Update Product
