@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Products from "../pages/Products.jsx";
+import Products from "../pages/Products";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import CreateProduct from "../pages/admin/CreateProduct";
