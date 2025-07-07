@@ -67,12 +67,11 @@ export const asyncUpdateUser = (updatedUser, id) => async (dispatch, getState) =
       `/users/${id}`,
       updatedUser
     );
-    toast.success("Profile updated successfully");
     localStorage.setItem("userToken", JSON.stringify(data));
     dispatch(asyncCurrentUser());
   } catch (error) {
     console.error(error);
-    toast.error("Something went wrong, while updating user details");
+    // toast.error("Something went wrong, while updating user details");
   }
 };
 

@@ -50,7 +50,17 @@ const Navbar = () => {
                 Create Product
               </NavLink>
               <NavLink
-                to="user-profile"
+                to="/cart"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-400 font-semibold"
+                    : "text-gray-300 hover:text-white"
+                }
+              >
+                Cart
+              </NavLink>
+              <NavLink
+                to="/user-profile"
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-400 font-semibold"
@@ -61,16 +71,28 @@ const Navbar = () => {
               </NavLink>
             </>
           ) : (
-            <NavLink
-              to="user-profile"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-blue-400 font-semibold"
-                  : "text-gray-300 hover:text-white"
-              }
-            >
-              Settings
-            </NavLink>
+            <>
+              <NavLink
+                to="/cart"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-400 font-semibold"
+                    : "text-gray-300 hover:text-white"
+                }
+              >
+                Cart
+              </NavLink>
+              <NavLink
+                to="/user-profile"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-400 font-semibold"
+                    : "text-gray-300 hover:text-white"
+                }
+              >
+                Settings
+              </NavLink>
+            </>
             // <button onClick={logoutHandler}>Logout</button>
           )}
         </>

@@ -49,6 +49,7 @@ const EditProfile = () => {
     updatedData.userImage = previewImg; 
     // console.log("Updated Data:", updatedData);
     dispatch(asyncUpdateUser(updatedData, user.id));
+    toast.success("Profile updated successfully");
     navigate(-1);
   };
 

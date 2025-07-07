@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, IndianRupee, Star } from "lucide-react";
 import { asyncDeleteProduct } from "../../store/actions/productActions";
+import { asyncUpdateUser } from './../../store/actions/userActions';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -24,6 +25,22 @@ const ProductDetails = () => {
         Product not found.
       </div>
     );
+  }
+
+    const addCartHandler = (id) => {
+    const copyUser = {...user, cart: [...user.cart]};
+    const isProductInCart = copyUser.cart.findIndex((c) => c.productId == id); // if product not present in cart -> returns -1
+    if(isProductInCart == -1){
+      copyUser.cart.push({productId: id, quantity: 1});
+    }
+    else{
+      copyUser.cart[isProductInCart] = {
+        productId: id,
+        quantity: copyUser.cart[isProductInCart].quantity + 1,
+      };
+    }
+    dispatch(asyncUpdateUser(copyUser, copyUser.id));
+    // console.log(user);
   }
 
   return (
@@ -77,7 +94,9 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <button className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg text-sm font-semibold transition duration-150 active:scale-95 shadow-md">
+              <button 
+              onClick = {() => addCartHandler(product.id)}
+              className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg text-sm font-semibold transition duration-150 active:scale-95 shadow-md">
                 Add to Cart
               </button>
 

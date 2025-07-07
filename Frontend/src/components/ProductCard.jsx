@@ -1,16 +1,37 @@
 import { ShoppingCart, IndianRupee, Star } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { asyncUpdateUser } from "../store/actions/userActions";
 
 export const ProductCard = ({ product }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.userReducer.userData);
 
   const handleCardClick = () => {
     navigate(`/product/${product.id}`);
   };
 
+  const addCartHandler = (id) => {
+    const copyUser = {...user, cart: [...user.cart]};
+    const isProductInCart = copyUser.cart.findIndex((c) => c.productId == id); // if product not present in cart -> returns -1
+    if(isProductInCart == -1){
+      copyUser.cart.push({productId: id, quantity: 1});
+    }
+    else{
+      copyUser.cart[isProductInCart] = {
+        productId: id,
+        quantity: copyUser.cart[isProductInCart].quantity + 1,
+      };
+    }
+    dispatch(asyncUpdateUser(copyUser, copyUser.id));
+    // console.log(user);
+  }
+
+  
+
   return (
     <div
-      onClick={handleCardClick}
       className="
         bg-slate-800/90 backdrop-blur-sm text-white
         w-full max-w-[230px] rounded-xl p-3
@@ -28,7 +49,9 @@ export const ProductCard = ({ product }) => {
       </div>
 
       {/* Product Image */}
-      <div className="relative w-full h-36 overflow-hidden rounded-md mb-3">
+      <div 
+      onClick={handleCardClick}
+      className="relative w-full h-36 overflow-hidden rounded-md mb-3">
         <img
           src={product.image}
           alt={product.title}
@@ -63,6 +86,7 @@ export const ProductCard = ({ product }) => {
         </div>
 
         <button
+        onClick={() => addCartHandler(product.id)}
           className="
             flex items-center gap-1 bg-blue-600 hover:bg-blue-700
             px-3 py-1 rounded-md text-xs font-medium

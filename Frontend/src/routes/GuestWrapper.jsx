@@ -6,10 +6,8 @@ const GuestWrapper = ({ children }) => {
 
   if (user) {
     return <Navigate to="/user-profile" replace />;
-      // Use 'replace' to prevent logged-in users from going back to login/register using the browser's back button
-
+    // Use 'replace' to prevent logged-in users from going back to login/register using the browser's back button
   }
-
   return children;
 };
 

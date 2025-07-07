@@ -10,6 +10,7 @@ import EditProfile from "../pages/user/EditProfile";
 import PageNotFound from "../pages/PageNotFound";
 import AuthWrapper from "./AuthWrapper";
 import GuestWrapper from './GuestWrapper';
+import Cart from "../pages/Cart";
 
 const MainRoutes = () => {
 
@@ -58,6 +59,14 @@ const MainRoutes = () => {
         element={
           <AuthWrapper>
             <UpdateProduct />
+          </AuthWrapper>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <AuthWrapper>
+            <Cart />
           </AuthWrapper>
         }
       />
