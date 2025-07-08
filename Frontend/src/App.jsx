@@ -20,8 +20,11 @@ const App = () => {
 
   return (
     <div className="bg-gray-800 text-white min-h-screen overflow-x-hidden">
-      <Navbar />
-      <MainRoutes />
+      <div className="pt-16">
+        {" "}
+        <Navbar />
+        <MainRoutes />
+      </div>
     </div>
   );
 };

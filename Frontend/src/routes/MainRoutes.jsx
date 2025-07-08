@@ -1,16 +1,18 @@
 import { Routes, Route } from "react-router-dom";
-import Products from "../pages/Products";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import CreateProduct from "../pages/admin/CreateProduct";
-import ProductDetails from "../pages/admin/ProductDetails";
-import UpdateProduct from "../components/UpdateProduct";
-import UserProfile from "../pages/user/UserProfile";
-import EditProfile from "../pages/user/EditProfile";
-import PageNotFound from "../pages/PageNotFound";
-import AuthWrapper from "./AuthWrapper";
-import GuestWrapper from './GuestWrapper';
-import Cart from "../pages/Cart";
+import { lazy } from "react";
+const Products = lazy(() => import("../pages/Products"))
+const Login = lazy(() => import("../pages/Login"))
+const Register = lazy(() => import("../pages/Register"))
+const CreateProduct = lazy(() => import("../pages/admin/CreateProduct"))
+const ProductDetails = lazy(() => import("../pages/admin/ProductDetails"))
+const UpdateProduct = lazy(() => import("../components/UpdateProduct"))
+const UserProfile = lazy(() => import("../pages/user/UserProfile"))
+const EditProfile = lazy(() => import("../pages/user/EditProfile"))
+const PageNotFound = lazy(() => import("../pages/PageNotFound"))
+const AuthWrapper = lazy(() => import("./AuthWrapper"))
+const GuestWrapper = lazy(() => import("./GuestWrapper"))
+const Cart = lazy(() => import("../pages/Cart"))
+
 
 const MainRoutes = () => {
 

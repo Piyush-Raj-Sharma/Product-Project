@@ -12,63 +12,53 @@ export const ProductCard = ({ product }) => {
     navigate(`/product/${product.id}`);
   };
 
- const addCartHandler = (product) => {
-  const cart = [...user.cart];
-  const index = cart.findIndex((item) => item.product?.id === product.id);
+  const addCartHandler = (product, e) => {
+    e.stopPropagation(); // prevent card click
+    const cart = [...user.cart];
+    const index = cart.findIndex((item) => item.product?.id === product.id);
 
-  if (index !== -1) {
-    // Update quantity 
-    cart[index] = {
-      ...cart[index],
-      quantity: cart[index].quantity + 1,
-    };
-  } else {
-    cart.push({ product, quantity: 1 });
-  }
+    if (index !== -1) {
+      cart[index] = {
+        ...cart[index],
+        quantity: cart[index].quantity + 1,
+      };
+    } else {
+      cart.push({ product, quantity: 1 });
+    }
 
-  const updatedUser = { ...user, cart };
-  dispatch(asyncUpdateUser(updatedUser, user.id));
-};
-
-
-  
+    const updatedUser = { ...user, cart };
+    dispatch(asyncUpdateUser(updatedUser, user.id));
+  };
 
   return (
     <div
+      onClick={handleCardClick}
       className="
-        bg-slate-800/90 backdrop-blur-sm text-white
-        w-full max-w-[230px] rounded-xl p-3
-        border border-slate-700 shadow-md
-        transition-all duration-300 group 
-        hover:scale-[1.03] 
-        hover:shadow-[0_8px_20px_rgba(59,130,246,0.25)] 
-        hover:border-blue-500/60
-        relative overflow-hidden
+        bg-gray-800/90 text-white border border-gray-700 
+        rounded-xl shadow-sm p-3 transition-transform duration-200 
+        hover:shadow-lg hover:scale-[1.015] cursor-pointer 
+        max-w-[230px] mx-auto flex flex-col justify-between
       "
     >
       {/* Badge */}
-      <div className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wide shadow-md z-1">
+      <div className="absolute top-2 right-2 bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wide z-10">
         New
       </div>
 
       {/* Product Image */}
-      <div 
-      onClick={handleCardClick}
-      className="relative w-full h-36 overflow-hidden rounded-md mb-3">
+      <div className="relative h-36 mb-3 rounded-lg overflow-hidden bg-gray-700 flex items-center justify-center">
         <img
           src={product.image}
           alt={product.title}
-          className="w-full h-full object-cover rounded-md transition-transform duration-300 group-hover:scale-110"
+          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition duration-300 rounded-md" />
       </div>
 
-      {/* Product Info */}
-      <h2 className="text-sm font-semibold truncate text-slate-100">
+      {/* Info */}
+      <h2 className="text-sm font-semibold truncate text-slate-100 mb-1">
         {product.title}
       </h2>
-
-      <p className="text-xs text-slate-400 mb-2 line-clamp-2">
+      <p className="text-xs text-slate-400 mb-3 line-clamp-2">
         {product.description?.slice(0, 60)}...
       </p>
 
@@ -81,23 +71,18 @@ export const ProductCard = ({ product }) => {
         <span className="ml-1 text-slate-400">(123)</span>
       </div>
 
-      {/* Price + Add to Cart */}
+      {/* Price + Add */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1 text-blue-400 font-semibold text-sm">
+        <div className="flex items-center gap-1 text-blue-400 font-bold text-sm">
           <IndianRupee size={14} />
           {product.price}
         </div>
-
         <button
-        onClick={() => addCartHandler(product)}
-          className="
-            flex items-center gap-1 bg-blue-600 hover:bg-blue-700
-            px-3 py-1 rounded-md text-xs font-medium
-            transition duration-150 active:scale-95
-          "
+          onClick={(e) => addCartHandler(product, e)}
+          className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-xs font-medium transition active:scale-95"
         >
           <ShoppingCart size={14} />
-          Add
+          <span className="hidden sm:inline">Add</span>
         </button>
       </div>
     </div>
