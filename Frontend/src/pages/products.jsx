@@ -1,46 +1,45 @@
-import { useEffect, useState } from "react";
-import { ProductCard } from "../components/ProductCard";
+import { lazy, Suspense, useEffect, useState } from "react";
 import CategoryBar from "../components/CategoryBar";
 import axiosInstance from "../api/axiosconfig";
 import { Boxes } from "lucide-react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useDispatch, useSelector } from "react-redux";
+import { lazyLoadProducts } from "../store/reducers/productSlice";
+
+const ProductCard = lazy(() => import("../components/ProductCard"));
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.productReducer.productData);
   const [hasMore, setHasMore] = useState(true);
   const [category, setCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
 
-  // Load more products for infinite scroll
+  // Fetch more products for infinite scroll
   const fetchProducts = async () => {
     try {
       const query = `/products?_start=${products.length}&_limit=10${
         category !== "All" ? `&category=${encodeURIComponent(category)}` : ""
-      }${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`;
-
-      console.log("Fetching more:", query);
+      }`;
 
       const { data } = await axiosInstance.get(query);
-      if (data.length === 0 || data.length < 10) setHasMore(false);
+      if (data.length < 10) setHasMore(false);
 
-      setProducts((prev) => [...prev, ...data]);
+      dispatch(lazyLoadProducts(data));
     } catch (error) {
       console.error("Fetch error:", error);
     }
   };
 
-  // Reset when category or search changes
+  // Reset data on category/search change
   useEffect(() => {
     const loadInitial = async () => {
       try {
         const query = `/products?_start=0&_limit=10${
           category !== "All" ? `&category=${encodeURIComponent(category)}` : ""
-        }${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`;
-
-        console.log("Initial fetch:", query);
+        }`;
 
         const { data } = await axiosInstance.get(query);
-        setProducts(data);
+        dispatch(lazyLoadProducts(data)); 
         setHasMore(data.length === 10);
       } catch (error) {
         console.error("Initial load error:", error);
@@ -48,7 +47,7 @@ const Products = () => {
     };
 
     loadInitial();
-  }, [category, searchQuery]);
+  }, [category]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
@@ -70,8 +69,6 @@ const Products = () => {
           <CategoryBar
             selectedCategory={category}
             onSelectCategory={setCategory}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
           />
         </div>
 
@@ -97,12 +94,23 @@ const Products = () => {
               }
             >
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                {products.map((product) => (
-                  <ProductCard
-                    key={product.id || product._id}
-                    product={product}
-                  />
-                ))}
+                {products.map((product) =>
+                  product && typeof product === "object" ? (
+                    <Suspense
+                      key={product._id || product.id}
+                      fallback={
+                        <div className="text-center text-slate-400 p-96">
+                          Loading card...
+                        </div>
+                      }
+                    >
+                      <ProductCard
+                        key={product._id || product.id}
+                        product={product}
+                      />
+                    </Suspense>
+                  ) : null
+                )}
               </div>
             </InfiniteScroll>
           ) : (

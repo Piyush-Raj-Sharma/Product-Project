@@ -41,6 +41,9 @@ const Navbar = () => {
               <NavLink to="/cart" className={navLinkClass}>
                 <ShoppingCart size={16} className="inline mr-1" /> Cart
               </NavLink>
+              <NavLink to="/orders" className={navLinkClass}>
+                <ShoppingCart size={16} className="inline mr-1" /> Orders
+              </NavLink>
               <NavLink to="/user-profile" className={navLinkClass}>
                 <User size={16} className="inline mr-1" /> Settings
               </NavLink>

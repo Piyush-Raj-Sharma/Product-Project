@@ -70,7 +70,7 @@ export const asyncUpdateUser = (updatedUser, id) => async (dispatch, getState) =
     localStorage.setItem("userToken", JSON.stringify(data));
     dispatch(asyncCurrentUser());
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     // toast.error("Something went wrong, while updating user details");
   }
 };
@@ -85,6 +85,6 @@ export const asyncDeleteUser = (id) => async (dispatch, getState) => {
     toast.success("Account deleted successfully");
   } catch (error) {
     console.error(error);
-    toast.error("Error deleting user:", error)
+    // toast.error("Error deleting user:", error)
   }
 }

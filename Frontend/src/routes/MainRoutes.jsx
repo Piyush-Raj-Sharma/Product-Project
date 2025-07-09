@@ -1,5 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy } from "react";
+  
+const Orders = lazy(() => import("../pages/Orders"))
+const Purchase = lazy(() => import("../components/Purchase"))
 const Products = lazy(() => import("../pages/Products"))
 const Login = lazy(() => import("../pages/Login"))
 const Register = lazy(() => import("../pages/Register"))
@@ -21,7 +24,7 @@ const MainRoutes = () => {
       {/* Public Routes */}
       <Route path="/" element={<Products />} />
 
-      {/* Protected Routes - so that users can access them after logging in  */}
+      {/* Protected Routes - so that users can't access them after logging in  */}
       <Route
         path="/login"
         element={
@@ -85,6 +88,22 @@ const MainRoutes = () => {
         element={
           <AuthWrapper>
             <EditProfile />
+          </AuthWrapper>
+        }
+      />
+      <Route
+        path="/orders"
+        element={
+          <AuthWrapper>
+            <Orders />
+          </AuthWrapper>
+        }
+      />
+      <Route
+        path="/order-successfull"
+        element={
+          <AuthWrapper>
+            <Purchase />
           </AuthWrapper>
         }
       />
