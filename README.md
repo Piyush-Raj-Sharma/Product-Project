@@ -147,11 +147,12 @@ Ensure API endpoints like `/products` and `/users` exist.
 
 ## 📸 Screenshots
 
-> Add actual screenshots here
-
 - Product Listing<img width="1920" height="1080" alt="Screenshot (378)" src="https://github.com/user-attachments/assets/50295a8d-4f73-4ac1-9427-e8ade06dce00" />
+
 - Product Details<img width="1919" height="1079" alt="Screenshot 2025-07-10 011123" src="https://github.com/user-attachments/assets/7d658671-804a-4ad7-bf99-9aa2c1515366" />
+
 - Cart Page<img width="1919" height="1079" alt="Screenshot 2025-07-10 011013" src="https://github.com/user-attachments/assets/ec0fa534-034c-4c98-839d-2ce2a3ca614a" />
+
 - User Profile with IP <img width="1919" height="1079" alt="Screenshot 2025-07-10 011032" src="https://github.com/user-attachments/assets/96a37c7e-74c6-45f6-87b9-305a7ead5e96" />
 
 ---
