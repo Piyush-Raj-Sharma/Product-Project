@@ -170,7 +170,7 @@ Ensure API endpoints like `/products` and `/users` exist.
 ## 🤝 Author
 
 **Piyush Raj**  
-🔗 [LinkedIn]([https://linkedin.com](https://www.linkedin.com/in/piyush-raj-sharma/)) | 💻 React Developer | 🚀 Open to opportunities
+🔗 [LinkedIn](https://www.linkedin.com/in/piyush-raj-sharma/) | 💻 React Developer | 🚀 Open to opportunities
 
 ---
 
